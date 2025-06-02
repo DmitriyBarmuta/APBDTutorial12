@@ -20,7 +20,7 @@ public class ClientsController : ControllerBase
     {
         try
         {
-            await _clientsService.DeleteClient(idClient, cancellationToken);
+            await _clientsService.DeleteClientAsync(idClient, cancellationToken);
             return NoContent();
         }
         catch (NoSuchClientException ex)

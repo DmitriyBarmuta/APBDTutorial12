@@ -31,4 +31,26 @@ public class TripsRepository : ITripsRepository
         Console.WriteLine($"Total trips count: {totalCount}");
         return (int)Math.Ceiling(totalCount / (double)pageSize);
     }
+
+    public async Task<Trip?> GetByIdAsync(int idTrip, CancellationToken cancellationToken)
+    {
+        return await _context.Trips
+            .FirstOrDefaultAsync(trip => trip.IdTrip == idTrip, cancellationToken);
+    }
+
+    public async Task AssignClientToTripAsync(int idClient, int idTrip, DateTime? assignDtoPaymentDate,
+        CancellationToken cancellationToken)
+    {
+        var clientTrip = new ClientTrip
+        {
+            IdClient = idClient,
+            IdTrip = idTrip,
+            RegisteredAt = DateTime.Now,
+            PaymentDate = assignDtoPaymentDate
+        };
+
+        _context.ClientTrips.Add(clientTrip);
+
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }

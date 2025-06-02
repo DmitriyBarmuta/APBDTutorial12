@@ -36,4 +36,30 @@ public class TripsController : ControllerBase
             return StatusCode(500, new { message = "Internal Server Error.", error = ex.Message });
         }
     }
+
+    [HttpPost("{idTrip:int}/clients")]
+    public async Task<IActionResult> AssignClientToTrip([FromBody] AssignClientToTripDTO assignDto,
+        int idTrip,
+        CancellationToken cancellationToken = default)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        try
+        {
+            var idClient = await _tripsService.AssignToTripAsync(assignDto, idTrip, cancellationToken);
+            return CreatedAtAction(nameof(GetAllTripsWithParams), new { idClient }, new { idClient });
+        }
+        catch (Exception ex) when (ex is ClientAlreadyExistsException or TripAlreadyHappenedException)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (NoSuchTripException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Internal Server Error.", error = ex.Message });
+        }
+    }
 }

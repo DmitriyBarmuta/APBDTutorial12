@@ -12,9 +12,9 @@ public class ClientsService : IClientsService
         _clientsRepository = clientsRepository;
     }
     
-    public async Task DeleteClient(int idClient, CancellationToken cancellationToken)
+    public async Task DeleteClientAsync(int idClient, CancellationToken cancellationToken)
     {
-        var client = await _clientsRepository.GetById(idClient, cancellationToken);
+        var client = await _clientsRepository.GetByIdAsync(idClient, cancellationToken);
         if (client == null)
             throw new NoSuchClientException("Client with given id was not found.");
 
@@ -22,8 +22,6 @@ public class ClientsService : IClientsService
         if (tripsAssigned > 0)
             throw new ClientAssignedToTripsException("Cannot delete client: he is currently assigned to at least one trip.");
 
-        await _clientsRepository.DeleteById(client, cancellationToken);
+        await _clientsRepository.DeleteByIdAsync(client, cancellationToken);
     }
-    
-    
 }
