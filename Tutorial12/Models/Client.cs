@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Tutorial12.Models;
 
-namespace Tutorial12.Models;
-
-public partial class Client
+public class Client
 {
     public int IdClient { get; set; }
 

@@ -13,6 +13,8 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 
 builder.Services.AddScoped<ITripsService, TripsService>();
 builder.Services.AddScoped<ITripsRepository, TripsRepository>();
+builder.Services.AddScoped<IClientsService, ClientsService>();
+builder.Services.AddScoped<IClientsRepository, ClientsRepository>();
 
 var app = builder.Build();
 
