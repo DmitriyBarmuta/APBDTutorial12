@@ -16,11 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
       <Folder Include="Data\" />
-      <Folder Include="Repositories\" />
-      <Folder Include="Resources\Database\" />
-      <Folder Include="Services\" />
     </ItemGroup>
 
 </Project>
